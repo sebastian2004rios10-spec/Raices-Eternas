@@ -1,0 +1,498 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <title>OFRENDA</title>
+</head>
+<body>
+    
+<canvas id="myCanvas">
+    <!--El elemento HTML canvas se puede utilizar para dibujar gráficos a través de 
+        secuencias de comandos (por lo general JavaScript ).-->
+</canvas>
+
+<!-- Aquí va todo el código de three.js -->
+<!-- script type="importmap" importa las librerías necesarias para three.js-->
+<script type="importmap"> 
+    {
+        "imports":{
+            "three": "./js/three.module.js",
+            "three/OrbitControls": "./js/OrbitControls.js" 
+        }
+}
+</script>
+<script type="module"> 
+//🗃️🗃️ Mandar llamar a la librería
+    import * as THREE from 'three'; 
+    import {OrbitControls} from 'three/OrbitControls';
+    console.log(OrbitControls);
+    import {RoundedBoxGeometry} from "./js/RoundedBoxGeometry.js"
+
+
+    //IMPORTANDO ARCHIVOS JS
+import ESC01S from "./props/florero.js"
+import ESC02S from "./props/CRUZ.js"
+import ESC03S from "./props/arco.js"
+import ESC05s from "./props/FOTO.js";
+import ESC02J from "./props/calaverita.js"
+import ESC03J from "./props/libro.js"
+import ESC01J from "./props/chocolate.js"
+import ESC01B from "./props/botella.js"
+import ESC03B from "./props/vela.js"
+import ESC02B from "./props/taza.js"
+import ESC04B from "./props/flores.js"
+import ESC01 from "./props/copal.js"
+import ESC04 from "./props/dulces.js"
+import ESC03 from "./props/frutas.js"
+import ESC02 from "./props/plato.js"
+import ESC06J  from "./props/calaverita1.js"
+import ESC05J  from "./props/calaverita2.js"
+import ESC07J  from "./props/calaverita3.js"
+import ESC05P from './props/pina.js';
+import ESC06P from './props/pera.js';
+import ESC07P from './props/uvas.js';
+import ESC06B from './props/mole.js';
+import ESC07PP from './props/cocacola.js';
+import ESC08P from './props/cigarros.js';
+import ESC0D from './props/dulces1.js';
+import ESC06S from './props/camino.js';
+
+
+//🕹️🕹️ Renderer - Realiza una conexión entre el código y el canvas
+    var renderer = new THREE.WebGLRenderer({
+    canvas: document.getElementById('myCanvas'), antialias: true,
+    });
+    renderer.setPixelRatio(window.decivePixelRatio);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x5623);
+
+
+// 🎬 Creando nueva escena - Es el espacio donde se colocan los objetos
+    var scene = new THREE.Scene();
+
+//🎥🎥 Agregar una cámara de perspectiva
+    var camera = new THREE.PerspectiveCamera(70,window.innerWidth / window.innerHeight,0.1,3000
+      );
+    scene.add(camera);
+
+    //Settings de la cámara
+    camera.position.set(0, 60, 70);
+
+
+    // Añadiendo los OrbitControls
+    var controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+
+ 
+//GridHelper
+var gridHelper = new THREE.GridHelper (50,50);
+//scene.add(gridHelper);
+
+var axesHelper = new THREE.AxesHelper(50);
+//scene.add(axesHelper);
+// Espacio para colocar los objetos
+
+///  💫💢🐭🐭 LUCES
+
+
+var light05 = new THREE.AmbientLight(0xFFFFFF,.5);
+scene.add(light05);
+var light06 = new THREE.DirectionalLight(0xFFFFFF,.5);
+scene.add(light06);
+var spotLight01 = new THREE.SpotLight(0xe32f21, 2.5);
+spotLight01.position.set(0, 150, 0);
+scene.add(spotLight01);
+
+//velas
+var pointLight01 = new THREE.PointLight(0xcf1500, .5);
+pointLight01.position.set(0,13,5 );
+scene.add(pointLight01);
+
+var pointLight02 = new THREE.PointLight(0xcf1500, .5);
+pointLight02.position.set(0,13,11 );
+scene.add(pointLight02);
+
+var pointLight03 = new THREE.PointLight(0xcf1500, .5);
+pointLight03.position.set(0,13,17 );
+scene.add(pointLight03);
+
+var pointLight04 = new THREE.PointLight(0xcf1500, .5);
+pointLight04.position.set(0,13,23 );
+scene.add(pointLight04);
+
+var pointLight05 = new THREE.PointLight(0xcf1500, .5);
+pointLight05.position.set(-5,13,11 );
+scene.add(pointLight05);
+
+var pointLight06 = new THREE.PointLight(0xcf1500, .5);
+pointLight06.position.set(5,13,11 );
+scene.add(pointLight06);
+
+//OBJETOS  ✏️✏️✏️✏️  🪶
+
+//FONDO
+var loader = new THREE.TextureLoader();
+var bgTexture= loader.load('./assets/campo.jpg');
+scene.background=bgTexture;
+
+//PISO
+
+/*var geometry01 = new THREE.BoxGeometry(150,3,100);
+var material01 = new THREE.MeshLambertMaterial({color:0xFCDA30});
+var mesh01 = new THREE.Mesh(geometry01,material01);
+scene.add(mesh01);
+mesh01.position.set(0,0,0);
+*/
+var geometryFoto1 = new THREE.BoxGeometry(150,3,100);
+var textureFoto1 = new THREE.TextureLoader().load('./assets/acerrin piso.jpg');
+
+var materialFoto1 = new THREE.MeshBasicMaterial({
+    map: textureFoto1
+});
+
+var meshFoto1 = new THREE.Mesh(geometryFoto1, materialFoto1);
+meshFoto1.position.set(0, 0,0); 
+scene.add(meshFoto1);
+
+//primer nivel 
+
+var geometry01 = new THREE.BoxGeometry(45, 5, 65);
+var material01 = new THREE.MeshLambertMaterial({ color: 0x2c2b26, side: THREE.DoubleSide });
+var mesh01 = new THREE.Mesh(geometry01,material01);
+scene.add(mesh01);
+mesh01.position.set(0,3,0);
+ 
+//segundo nivel 
+
+var geometry02 = new THREE.BoxGeometry(40, 5, 60);
+var material02 = new THREE.MeshLambertMaterial({ color: 0x2c2b26, side: THREE.DoubleSide });
+var mesh02 = new THREE.Mesh(geometry02,material02);
+scene.add(mesh02);
+mesh02.position.set(0,5,0);
+
+//florero
+
+const florero = ESC01S({x:12,y:6,z:20}); 
+florero.scale.set(1.2,1.2,1.2);
+scene.add(florero);
+
+const florero2 = ESC01S({x:-12,y:6,z:20}); 
+florero2.scale.set(1.2,1.2,1.2);
+scene.add(florero2);
+
+
+//cruz 
+const CRUZ = ESC02S({x:0,y:7,z:-25}); 
+scene.add(CRUZ);
+
+//foto
+const foto = ESC05s({ x: 0, y: 9, z: 1 });
+scene.add(foto);
+
+//calaverita 
+const calaverita = ESC02J ({ x: 0, y: 7, z: -8 });
+scene.add(calaverita);
+
+//libro
+const libro = ESC03J ({ x: -10, y: 3.5, z: -10 });
+scene.add(libro);
+
+//botella 
+const botella = ESC01B ({ x: -12, y: 9, z: -15 });
+botella.scale.set(0.2, 0.2, 0.2);
+scene.add(botella);
+
+//vela
+const vela = ESC03B ({ x: 0, y: 7, z: 5 });
+vela.scale.set(0.2, 0.2, 0.2);
+scene.add(vela);
+
+const vela2 = ESC03B ({ x: 0, y: 7, z: 11 });
+vela2.scale.set(0.2, 0.2, 0.2);
+scene.add(vela2);
+
+const vela3 = ESC03B ({ x: 0, y: 7, z: 17 });
+vela3.scale.set(0.2, 0.2, 0.2);
+scene.add(vela3);
+
+const vela4 = ESC03B ({ x: 0, y: 7, z: 23 });
+vela4.scale.set(0.2, 0.2, 0.2);
+scene.add(vela4);
+
+const vela5 = ESC03B ({ x: -5, y: 7, z: 11 });
+vela5.scale.set(0.2, 0.2, 0.2);
+scene.add(vela5);
+
+const vela6 = ESC03B ({ x: 5 , y: 7, z: 11 });
+vela6.scale.set(0.2, 0.2, 0.2);
+scene.add(vela6);
+
+//taza
+const taza = ESC02B ({ x: 22, y: 7, z: -27 });
+taza.scale.set(0.3, 0.3, 0.3);
+scene.add(taza);
+
+//flores 
+
+//parte atras
+const flores = ESC04B ({ x: 22, y: 5, z: -32 });
+flores.scale.set(0.2, 0.2, 0.2);
+scene.add(flores);
+
+const flores1 = ESC04B ({ x: 9, y: 5, z: -32 });
+flores1.scale.set(0.2, 0.2, 0.2);
+scene.add(flores1);
+
+const flores2 = ESC04B ({ x: -4, y: 5, z: -32 });
+flores2.scale.set(0.2, 0.2, 0.2);
+scene.add(flores2);
+
+//parte enfrente
+const flores3 = ESC04B ({ x: -3, y: 5, z: 32 });
+flores3.scale.set(0.2, 0.2, 0.2);
+scene.add(flores3);
+
+const flores4 = ESC04B ({ x: 9, y: 5, z: 32 });
+flores4.scale.set(0.2, 0.2, 0.2);
+scene.add(flores4);
+
+const flores5 = ESC04B ({ x: 21, y: 5, z: 32 });
+flores5.scale.set(0.2, 0.2, 0.2);
+scene.add(flores5);
+
+//lado izquierdo
+const flores6 = ESC04B ({ x: -22, y: 5, z: -35 });
+flores6.scale.set(0.2, 0.2, 0.2);
+flores6.rotation.set(0,Math.PI/2,0);
+scene.add(flores6);
+
+const flores7 = ESC04B ({ x: -22, y: 5, z: -22 });
+flores7.scale.set(0.2, 0.2, 0.2);
+flores7.rotation.set(0,Math.PI/2,0);
+scene.add(flores7);
+
+const flores8 = ESC04B ({ x: -22, y: 5, z: -8 });
+flores8.scale.set(0.2, 0.2, 0.2);
+flores8.rotation.set(0,Math.PI/2,0);
+scene.add(flores8);
+
+const flores9 = ESC04B ({ x: -22, y: 5, z: 5 });
+flores9.scale.set(0.2, 0.2, 0.2);
+flores9.rotation.set(0,Math.PI/2,0);
+scene.add(flores9);
+
+const flores10 = ESC04B ({ x: -22, y: 5, z: 18 });
+flores10.scale.set(0.2, 0.2, 0.2);
+flores10.rotation.set(0,Math.PI/2,0);
+scene.add(flores10);
+
+//lado derecho
+const flores11 = ESC04B ({ x: 22, y: 5, z: -35 });
+flores11.scale.set(0.2, 0.2, 0.2);
+flores11.rotation.set(0,Math.PI/2,0);
+scene.add(flores11);
+
+const flores12 = ESC04B ({ x: 22, y: 5, z: -22 });
+flores12.scale.set(0.2, 0.2, 0.2);
+flores12.rotation.set(0,Math.PI/2,0);
+scene.add(flores12);
+
+const flores13 = ESC04B ({ x: 22, y: 5, z: -8 });
+flores13.scale.set(0.2, 0.2, 0.2);
+flores13.rotation.set(0,Math.PI/2,0);
+scene.add(flores13);
+
+const flores14 = ESC04B ({ x: 22, y: 5, z: 5 });
+flores14.scale.set(0.2, 0.2, 0.2);
+flores14.rotation.set(0,Math.PI/2,0);
+scene.add(flores14);
+
+const flores15 = ESC04B ({ x: 22, y: 5, z: 18 });
+flores15.scale.set(0.2, 0.2, 0.2);
+flores15.rotation.set(0,Math.PI/2,0);
+scene.add(flores15);
+
+//copal
+const copal = ESC01 ({ x: 40, y: 1, z: 30 });
+copal.scale.set(2, 2, 2);
+scene.add(copal);
+
+const copal3 = ESC01 ({ x: 40, y: 1, z: -30 });
+copal3.scale.set(2, 2, 2);
+scene.add(copal3);
+
+const copal2 = ESC01 ({ x: 52, y: 1, z: 1 });
+copal2.scale.set(2, 2, 2);
+scene.add(copal2);
+
+const copal4 = ESC01 ({ x: -40, y: 1, z: 30 });
+copal4.scale.set(2, 2, 2);
+scene.add(copal4);
+
+const copal5 = ESC01 ({ x: -40, y: 1, z: -30 });
+copal5.scale.set(2, 2, 2);
+scene.add(copal5);
+
+const copal6 = ESC01 ({ x: -52, y: 1, z: 1 });
+copal6.scale.set(2, 2, 2);
+scene.add(copal6);
+
+//Dulces
+
+const dulces1 = ESC0D ({ x: -13, y: 7.5, z: 10 });
+dulces1.scale.set(1.5, 1.5, 1.5);
+scene.add(dulces1);
+
+
+
+//frutas
+const frutas = ESC03 ({ x: 11, y: 8, z: 10 });
+frutas.scale.set(2, 2, 2);
+frutas.rotation.set(0,Math.PI/2,0);
+scene.add(frutas);
+
+const pina = ESC05P({ x: 14, y: 6.5, z: 9 });
+pina.scale.set(8, 8, 8);
+    scene.add(pina);
+
+    const pera = ESC06P({ x: 16, y: 6, z: 12});
+    pera.scale.set(7, 7, 7);
+    scene.add(pera);
+
+    const uvas = ESC07P({ x: 12, y: 10,z: 15 });
+    uvas.scale.set(5, 5, 5);
+    uvas.rotation.set(Math.PI/2,0,4);
+    scene.add(uvas);
+
+//plato
+const plato = ESC02 ({ x: 13, y: 7.5, z: 10 });
+plato.scale.set(2, 2, 2);
+scene.add(plato);
+
+
+//arco flores tumba 
+const arco = ESC03S ({ x: 0, y: -2, z: 0 });
+arco.scale.set(1, 1, 1);
+scene.add(arco);
+
+const arco1 = ESC03S ({ x: 38, y: -10, z: 0 });
+arco1.scale.set(1, 1, 1);
+scene.add(arco1);
+
+const arco2 = ESC03S ({ x: -38, y: -10, z: 0 });
+arco2.scale.set(1, 1, 1);
+scene.add(arco2);
+//0
+const arco0 = ESC03S ({ x: 0, y: 30, z: 0 });
+arco0.scale.set(1, 1, 1);
+scene.add(arco0);
+//1
+const arco3 = ESC03S ({ x: -38, y: 15, z: 0 });
+arco3.scale.set(1, 1, 1);
+scene.add(arco3);
+//2
+const arco4 = ESC03S ({ x: 38, y: 15, z: 0 });
+arco4.scale.set(1, 1, 1);
+scene.add(arco4);
+
+//calaverita1
+const calaverita1= ESC06J ({ x: 16, y: 6, z: 25 });
+calaverita1.scale.set(0.8, 0.8, 0.8);
+scene.add(calaverita1);
+
+const calaverita12= ESC05J ({ x: -16, y: 6, z: 25 });
+calaverita12.scale.set(0.8, 0.8, 0.8);
+scene.add(calaverita12);
+
+const calaverita13= ESC06J ({ x: 6, y: 7, z: 25 });
+calaverita13.scale.set(0.5, 0.5, 0.5);
+scene.add(calaverita13);
+
+const calaverita14= ESC05J ({ x: -6, y: 7, z: 25 });
+calaverita14.scale.set(0.5, 0.5, 0.5);
+scene.add(calaverita14);
+
+//calaverita2
+const calaverita2= ESC05J ({ x: 39, y: -1, z: 0 });
+calaverita2.scale.set(1.5, 1.5, 1.5);
+scene.add(calaverita2);
+
+//calaverita3
+const calaverita3= ESC07J ({ x: -39, y: -1, z: 0 });
+calaverita3.scale.set(1.5, 1.5, 1.5);
+scene.add(calaverita3);
+
+//mole
+const mole= ESC06B ({ x: -4, y: 6, z: -1 });
+mole.scale.set(1.7, 1.7, 1.7);
+scene.add(mole);
+
+//coca
+const cocacola= ESC07PP ({ x: -16, y: 8, z: -1 });
+cocacola.scale.set(11, 11, 11);
+scene.add(cocacola);
+
+//cigarros
+const cigarros= ESC08P ({ x: -9, y: 7.5, z: -3 });
+cigarros.scale.set(10, 10, 10);
+scene.add(cigarros);
+
+//botellas lado izquierdo
+const botella1 = ESC01B ({ x: -30, y: 2.5, z: -20 });
+botella1.scale.set(0.3, 0.3, 0.3);
+scene.add(botella1);
+
+const botella2 = ESC01B ({ x: -30, y: 2.5, z: 25 });
+botella2.scale.set(0.3, 0.3, 0.3);
+scene.add(botella2);
+
+const botella3 = ESC01B ({ x: -50, y: 2.5, z: -20 });
+botella3.scale.set(0.3, 0.3, 0.3);
+scene.add(botella3);
+
+const botella4 = ESC01B ({ x: -50, y: 2.5, z: 25 });
+botella4.scale.set(0.3, 0.3, 0.3);
+scene.add(botella4);
+
+//botellas lado derecho
+const botella5 = ESC01B ({ x: 30, y: 2.5, z: -20 });
+botella5.scale.set(0.3, 0.3, 0.3);
+scene.add(botella5);
+
+const botella6 = ESC01B ({ x: 30, y: 2.5, z: 25 });
+botella6.scale.set(0.3, 0.3, 0.3);
+scene.add(botella6);
+
+const botella7 = ESC01B ({ x: 50, y: 2.5, z: -20 });
+botella7.scale.set(0.3, 0.3, 0.3);
+scene.add(botella7);
+
+const botella8 = ESC01B ({ x: 50, y: 2.5, z: 25 });
+botella8.scale.set(0.3, 0.3, 0.3);
+scene.add(botella8);
+
+//camino
+const camino = ESC06S ({ x: 0, y: 1, z: 0 });
+//camino.scale.set(0.3, 0.3, 0.3);
+scene.add(camino);
+
+
+
+//🎰🎰Rendering y animación
+    requestAnimationFrame(render);
+    function render() {
+    //🪄🪄 Animación - 
+
+
+
+
+
+    //🎮🎮Actualización del OrbitControls para generar la suavidad de movimiento
+    controls.update();
+    //Llamado para renderizar y volver a llamar a la misma función (render)
+    renderer.render(scene, camera);
+    requestAnimationFrame(render);
+    }
+</script>
+</body>
+</html>
